@@ -43,13 +43,13 @@ public class MazeBuilder implements Runnable {
 	/**
 	 * Constructor for a randomized maze generation
 	 */
-	public MazeBuilder(){
+	public MazeBuilder() {
 		random = SingleRandom.getRandom();
 	}
 	/**
 	 * Constructor with option to make maze generation deterministic or random
 	 */
-	public MazeBuilder(boolean deterministic){
+	public MazeBuilder(boolean deterministic) {
 		if (deterministic) {
 			SingleRandom.setSeed(42);
 		}

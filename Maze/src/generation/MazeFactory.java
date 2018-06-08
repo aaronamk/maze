@@ -84,7 +84,7 @@ public class MazeFactory implements Factory {
 			try {
 				buildThread.join();
 			} catch (Exception e) { 
-				System.out.println("MazeBuilder.wailTillDelivered: join synchronization with builder thread lead to an exception") ;
+				System.out.println("MazeBuilder.waitTillDelivered: join synchronization with builder thread lead to an exception") ;
 			}
 		}
 		else {
