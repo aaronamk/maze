@@ -1,15 +1,15 @@
 package generation;
 
-public class MyOrder implements Order {
+public class StubOrder implements Order {
 	private int SkillLevel;
 	Builder Builder;
 	boolean Perfect;
 	int Progress = 0;
 	MazeConfiguration MazeConfig;
 	
-	public MyOrder() {}
+	public StubOrder() {}
 	
-	public MyOrder(int SkillLevel, Builder Builder, boolean Perfect) {
+	public StubOrder(int SkillLevel, Builder Builder, boolean Perfect) {
 		this.SkillLevel = SkillLevel;
 		this.Builder = Builder;
 		this.Perfect = Perfect;
@@ -38,5 +38,9 @@ public class MyOrder implements Order {
 	@Override
 	public void updateProgress(int percentage) {
 		Progress = percentage;
+	}
+	
+	public MazeConfiguration getMazeConfiguration() {
+		return MazeConfig;
 	}
 }
