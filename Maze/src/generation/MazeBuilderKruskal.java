@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Aaron
  * 
  */
-public class MazeBuilderKruskal extends MazeBuilder {
+public class MazeBuilderKruskal extends MazeBuilder implements Runnable{
 	private ArrayList<ArrayList<int[]>> Families;
 	private ArrayList<Wall> Walls;
 	
@@ -19,8 +19,25 @@ public class MazeBuilderKruskal extends MazeBuilder {
 	 */
 	public MazeBuilderKruskal() {
 		super();
-		for(int i=0;i<width;i++) {
-			for(int j=0;j<height;j++) {
+		setUp();
+		
+	}
+	
+	/**
+	 * Constructor with option to make maze generation deterministic or random
+	 * @param deterministic
+	 */
+	public MazeBuilderKruskal(boolean deterministic) {
+		super(deterministic);
+		setUp();
+	}
+	
+	/**
+	 * Used to initialize the Families and Walls global variables.
+	 */
+	public void setUp() {
+		for(int i=0; i<width; i++) {
+			for(int j=0; j<height; j++) {
 				int[] coordinates = {i,j};
 				ArrayList<int[]> ToAdd = new ArrayList<int[]>();
 				ToAdd.add(coordinates);
@@ -32,15 +49,6 @@ public class MazeBuilderKruskal extends MazeBuilder {
 					Walls.add(new Wall(i,j,CardinalDirection.South));
 			}
 		}
-		
-	}
-	
-	/**
-	 * Constructor with option to make maze generation deterministic or random
-	 * @param deterministic
-	 */
-	public MazeBuilderKruskal(boolean deterministic) {
-		super(deterministic);
 	}
 	
 	/**
@@ -51,17 +59,15 @@ public class MazeBuilderKruskal extends MazeBuilder {
 			Wall RandWall = Walls.remove((int)(Math.random()*Walls.size()));
 			int ParentPos = -1, ChildPos = -1;
 			
-			for(int i=0;i<Families.size();i++) {
-				for(int j=0;j<Families.get(i).size();j++) {
-					if(Families.get(i).get(j)[0] == RandWall.getX() && Families.get(i).get(j)[1] == RandWall.getY()) {
+			for(int i=0; i<Families.size(); i++) {
+				for(int j=0; j<Families.get(i).size(); j++) {
+					if(Families.get(i).get(j)[0] == RandWall.getX() && Families.get(i).get(j)[1] == RandWall.getY())
 						ParentPos = i;
-					}
-					if(Families.get(i).get(j)[0] == RandWall.getNeighborX() && Families.get(i).get(j)[1] == RandWall.getNeighborY()) {
+					if(Families.get(i).get(j)[0] == RandWall.getNeighborX() && Families.get(i).get(j)[1] == RandWall.getNeighborY())
 						ChildPos = i;
-					}
 				}
 			}
-			if(combineFamilies(ParentPos,ChildPos)) {
+			if(combineFamilies(ParentPos, ChildPos)) {
 				cells.deleteWall(RandWall);
 			}
 		}

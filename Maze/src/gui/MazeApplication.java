@@ -65,8 +65,8 @@ public class MazeApplication extends JFrame {
 	    // Case 3: Eller, Kruskal or some other generation algorithm
 	    else if ("Kruskal".equalsIgnoreCase(parameter))
 	    {
-	    	// TODO: for P2 assignment, please add code to set the builder accordingly
-	        throw new RuntimeException("Don't know anybody named Kruskal...");
+	    	msg = "MazeApplication: generating random maze with Kruskal's algorithm.";
+	        result.setBuilder(Order.Builder.Kruskal);
 	    }
 	    // Case 4: a file
 	    else {
