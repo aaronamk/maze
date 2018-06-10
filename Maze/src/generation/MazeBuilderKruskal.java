@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * @author Aaron
  * 
  */
-public class MazeBuilderKruskal extends MazeBuilder implements Runnable{
-	private ArrayList<ArrayList<int[]>> Families;
-	private ArrayList<Wall> Walls;
+public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
+	private ArrayList<ArrayList<int[]>> Families = new ArrayList<>();
+	private ArrayList<Wall> Walls = new ArrayList<>();
 	
 	/**
 	 * Constructor for a randomized maze generation
@@ -20,7 +20,6 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable{
 	public MazeBuilderKruskal() {
 		super();
 		setUp();
-		
 	}
 	
 	/**
@@ -36,10 +35,11 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable{
 	 * Used to initialize the Families and Walls global variables.
 	 */
 	public void setUp() {
+		System.out.println("help");
 		for(int i=0; i<width; i++) {
 			for(int j=0; j<height; j++) {
 				int[] coordinates = {i,j};
-				ArrayList<int[]> ToAdd = new ArrayList<int[]>();
+				ArrayList<int[]> ToAdd = new ArrayList<>();
 				ToAdd.add(coordinates);
 				Families.add(ToAdd);
 				
