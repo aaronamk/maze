@@ -19,7 +19,6 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
 	 */
 	public MazeBuilderKruskal() {
 		super();
-		setUp();
 	}
 	
 	/**
@@ -28,14 +27,13 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
 	 */
 	public MazeBuilderKruskal(boolean deterministic) {
 		super(deterministic);
-		setUp();
 	}
 	
 	/**
-	 * Used to initialize the Families and Walls global variables.
+	 * This method generates pathways into the maze.
 	 */
-	public void setUp() {
-		System.out.println("help");
+	@Override
+	protected void generatePathways() {
 		for(int i=0; i<width; i++) {
 			for(int j=0; j<height; j++) {
 				int[] coordinates = {i,j};
@@ -45,16 +43,11 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
 				
 				if(i != width-1)
 					Walls.add(new Wall(i,j,CardinalDirection.East));
-				if(i != height-1)
+				if(j != height-1)
 					Walls.add(new Wall(i,j,CardinalDirection.South));
 			}
 		}
-	}
-	
-	/**
-	 * This method generates pathways into the maze.
-	 */
-	public void generatePathways() {
+		
 		while(Families.size()>1) {
 			Wall RandWall = Walls.remove((int)(Math.random()*Walls.size()));
 			int ParentPos = -1, ChildPos = -1;
@@ -79,7 +72,7 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
 	 * @param ChildFam
 	 * @return true if the families were different
 	 */
-	public boolean combineFamilies(int ParentFam, int ChildFam) {
+	private boolean combineFamilies(int ParentFam, int ChildFam) {
 		if(ParentFam == ChildFam)
 			return false;
 		while(Families.get(ChildFam).size()>0)

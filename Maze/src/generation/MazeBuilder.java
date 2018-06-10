@@ -66,7 +66,6 @@ public class MazeBuilder implements Runnable {
 		// derive parameters
 		width = Constants.SKILL_X[skill];
 		height = Constants.SKILL_Y[skill];
-		System.out.println(width +"  "+ height);
 		// only algorithm without rooms guarantees a perfect maze
 		// rooms can result in loops, so for a perfect maze, set room number to 0
 		rooms = order.isPerfect() ? 0 : Constants.SKILL_ROOMS[skill];
