@@ -34,7 +34,6 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
 	 */
 	@Override
 	protected void generatePathways() {
-		System.out.print(width);
 		for(int i=0; i<width; i++) {
 			for(int j=0; j<height; j++) {
 				int[] coordinates = {i,j};
@@ -50,7 +49,7 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
 		}
 		
 		while(Families.size()>1) {
-			Wall RandWall = Walls.remove((int)(Math.random()*Walls.size()));
+			Wall RandWall = Walls.remove(random.nextIntWithinInterval(0, Walls.size()-1));
 			int ParentPos = -1, ChildPos = -1;
 			
 			for(int i=0; i<Families.size(); i++) {
