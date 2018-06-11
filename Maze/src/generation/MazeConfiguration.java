@@ -97,7 +97,7 @@ public interface MazeConfiguration {
 	 * @param dir is the direction in terms of North, East, South, West
 	 * @return true if (x,y) is valid and there is a wall in the given direction, false otherwise
 	 */
-	public boolean hasWall(int x, int y, CardinalDirection dir) ;
+	public boolean hasWall(int x, int y, CardinalDirection dir);
 	/**
 	 * Provides coordinates of a position adjacent to the given (x,y)
 	 * position that has a distance to the exit that is less than

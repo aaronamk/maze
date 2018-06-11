@@ -34,6 +34,7 @@ public class MazeBuilderKruskal extends MazeBuilder implements Runnable {
 	 */
 	@Override
 	protected void generatePathways() {
+		System.out.print(width);
 		for(int i=0; i<width; i++) {
 			for(int j=0; j<height; j++) {
 				int[] coordinates = {i,j};
