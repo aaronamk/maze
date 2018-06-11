@@ -87,7 +87,7 @@ public interface Robot {
 	 * @return array of length 2, x = array[0], y=array[1]
 	 * @throws Exception if position is outside of the maze
 	 */
-	int[] getCurrentPosition() throws Exception  ;
+	int[] getCurrentPosition() throws Exception;
 	/**
 	 * Provides the robot with a reference to the controller to cooperate with.
 	 * The robot memorizes the controller such that this method is most likely called only once
@@ -97,36 +97,36 @@ public interface Robot {
 	 * @param controller is the communication partner for robot
 	 * @precondition controller != null, controller is in playing state and has a maze
 	 */
-	void setMaze(Controller controller) ;
+	void setMaze(Controller controller);
 	/**
 	 * Tells if current position (x,y) is right at the exit but still inside the maze. 
 	 * Used to recognize termination of a search.
 	 * @return true if robot is at the exit, false otherwise
 	 */
-	boolean isAtExit() ;
+	boolean isAtExit();
 	/**
 	 * Tells if a sensor can identify the exit in given direction relative to 
 	 * the robot's current forward direction from the current position.
 	 * @return true if the exit of the maze is visible in a straight line of sight
 	 * @throws UnsupportedOperationException if robot has no sensor in this direction
 	 */
-	boolean canSeeExit(Direction direction) throws UnsupportedOperationException ;
+	boolean canSeeExit(Direction direction) throws UnsupportedOperationException;
 	/**
 	 * Tells if current position is inside a room. 
 	 * @return true if robot is inside a room, false otherwise
 	 * @throws UnsupportedOperationException if not supported by robot
 	 */	
-	boolean isInsideRoom() throws UnsupportedOperationException ;
+	boolean isInsideRoom() throws UnsupportedOperationException;
 	/**
 	 * Tells if the robot has a room sensor.
 	 */
-	boolean hasRoomSensor() ;	
+	boolean hasRoomSensor();	
 	/**
 	 * Provides the current cardinal direction.
 	 * 
 	 * @return cardinal direction is robot's current direction in absolute terms
 	 */	
-	CardinalDirection getCurrentDirection() ;
+	CardinalDirection getCurrentDirection();
 	/**
 	 * Returns the current battery level.
 	 * The robot has a given battery level (energy level) 
@@ -136,7 +136,7 @@ public interface Robot {
 	 * If battery level <= 0 then robot stops to function and hasStopped() is true.
 	 * @return current battery level, level is > 0 if operational. 
 	 */
-	float getBatteryLevel() ;
+	float getBatteryLevel();
 	/**
 	 * Sets the current battery level.
 	 * The robot has a given battery level (energy level) 
@@ -147,7 +147,7 @@ public interface Robot {
 	 * @param level is the current battery level
 	 * @precondition level >= 0 
 	 */
-	void setBatteryLevel(float level) ;
+	void setBatteryLevel(float level);
 	/** 
 	 * Gets the distance traveled by the robot.
 	 * The robot has an odometer that calculates the distance the robot has moved.
@@ -171,7 +171,7 @@ public interface Robot {
 	 * Scaling by other degrees approximates the corresponding consumption. 
 	 * @return energy for a full rotation
 	 */
-	float getEnergyForFullRotation() ;
+	float getEnergyForFullRotation();
 	/**
 	 * Gives the energy consumption for moving forward for a distance of 1 step.
 	 * For simplicity, we assume that this equals the energy necessary 
@@ -179,12 +179,12 @@ public interface Robot {
 	 * approximately the corresponding multiple.
 	 * @return energy for a single step forward
 	 */
-	float getEnergyForStepForward() ;
+	float getEnergyForStepForward();
 	/**
 	 * Tells if the robot has stopped for reasons like lack of energy, hitting an obstacle, etc.
 	 * @return true if the robot has stopped, false otherwise
 	 */
-	boolean hasStopped() ;
+	boolean hasStopped();
 	/**
 	 * Tells the distance to an obstacle (a wall or border) 
 	 * in a direction as given and relative to the robot's current forward direction.
@@ -196,7 +196,7 @@ public interface Robot {
 	 * in a straight line of sight, Integer.MAX_VALUE otherwise
 	 * @throws UnsupportedOperationException if not supported by robot
 	 */
-	int distanceToObstacle(Direction direction) throws UnsupportedOperationException ;
+	int distanceToObstacle(Direction direction) throws UnsupportedOperationException;
 	/**
 	 * Tells if the robot has a distance sensor for the given direction.
 	 * Since this interface is generic and may be implemented with robots 
@@ -204,6 +204,5 @@ public interface Robot {
 	 * robot driver to adapt its driving strategy according the features it
 	 * finds supported by a robot.
 	 */
-	boolean hasDistanceSensor(Direction direction) ;
-
+	boolean hasDistanceSensor(Direction direction);
 }

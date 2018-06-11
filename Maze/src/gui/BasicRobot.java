@@ -3,7 +3,19 @@ package gui;
 import generation.CardinalDirection;
 
 public class BasicRobot implements Robot {
-
+	
+	final int MAX_ENERGY = 2500;
+	final int FULL_ROTATION_ENERGY_COST = 12;
+	final int STEP_ENERGY_COST = 5;
+	final int SENSOR_ENERGY_COST = 1;
+	
+	private Controller Maze;
+	private int[] Position;
+	private CardinalDirection Direction;
+	private float Energy = MAX_ENERGY;
+	private boolean IsStopped;
+	private int Odometer = 0;
+	
 	@Override
 	public void rotate(Turn turn) {
 		// TODO Auto-generated method stub
@@ -18,14 +30,12 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public int[] getCurrentPosition() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return Position;
 	}
 
 	@Override
 	public void setMaze(Controller controller) {
-		// TODO Auto-generated method stub
-		
+		Maze = controller;
 	}
 
 	@Override
@@ -36,8 +46,13 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public boolean canSeeExit(Direction direction) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			this.distanceToObstacle(direction);
+			return true;
+		}
+		catch(UnsupportedOperationException e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -54,50 +69,42 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public CardinalDirection getCurrentDirection() {
-		// TODO Auto-generated method stub
-		return null;
+		return Direction;
 	}
 
 	@Override
 	public float getBatteryLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Energy;
 	}
 
 	@Override
 	public void setBatteryLevel(float level) {
-		// TODO Auto-generated method stub
-		
+		Energy = level;
 	}
 
 	@Override
 	public int getOdometerReading() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Odometer;
 	}
 
 	@Override
 	public void resetOdometer() {
-		// TODO Auto-generated method stub
-		
+		Odometer = 0;
 	}
 
 	@Override
 	public float getEnergyForFullRotation() {
-		// TODO Auto-generated method stub
-		return 0;
+		return FULL_ROTATION_ENERGY_COST;
 	}
 
 	@Override
 	public float getEnergyForStepForward() {
-		// TODO Auto-generated method stub
-		return 0;
+		return STEP_ENERGY_COST;
 	}
 
 	@Override
 	public boolean hasStopped() {
-		// TODO Auto-generated method stub
-		return false;
+		return IsStopped;
 	}
 
 	@Override
@@ -111,5 +118,4 @@ public class BasicRobot implements Robot {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

@@ -2,6 +2,12 @@ package gui;
 
 import generation.Distance;
 
+/**
+ * This class designates a RobotDriver that knows the fastest way of getting out of the maze
+ * 
+ * @author Aaron
+ *
+ */
 public class Wizard implements RobotDriver{
 
 	@Override

@@ -2,8 +2,14 @@ package gui;
 
 import generation.Distance;
 
+/**
+ * This class designates a RobotDriver that follows walls
+ * 
+ * @author Aaron
+ *
+ */
 public class WallFollower implements RobotDriver{
-
+	
 	@Override
 	public void setRobot(Robot r) {
 		// TODO Auto-generated method stub
