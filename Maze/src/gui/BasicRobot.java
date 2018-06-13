@@ -10,10 +10,8 @@ public class BasicRobot implements Robot {
 	final int SENSOR_ENERGY_COST = 1;
 	
 	private Controller Maze;
-	private int[] Position;
-	private CardinalDirection Direction;
-	private float Energy = MAX_ENERGY;
 	private boolean IsStopped;
+	private float Energy = MAX_ENERGY;
 	private int Odometer = 0;
 	
 	@Override
@@ -24,13 +22,14 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public void move(int distance, boolean manual) {
-		// TODO Auto-generated method stub
-		
+		for(int i=0; i<distance; i++) {
+			
+		}
 	}
 
 	@Override
 	public int[] getCurrentPosition() throws Exception {
-		return Position;
+		return Maze.getCurrentPosition();
 	}
 
 	@Override
@@ -40,8 +39,7 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public boolean isAtExit() {
-		// TODO Auto-generated method stub
-		return false;
+		return (Maze.getMazeConfiguration().getDistanceToExit(Maze.getCurrentPosition()[0], Maze.getCurrentPosition()[1]) == 1);
 	}
 
 	@Override
@@ -57,19 +55,17 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public boolean isInsideRoom() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return false;
+		return Maze.getMazeConfiguration().getMazecells().isInRoom(Maze.getCurrentPosition()[0], Maze.getCurrentPosition()[1]);
 	}
 
 	@Override
 	public boolean hasRoomSensor() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public CardinalDirection getCurrentDirection() {
-		return Direction;
+		return Maze.getCurrentDirection();
 	}
 
 	@Override
@@ -115,7 +111,29 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public boolean hasDistanceSensor(Direction direction) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
+	}
+	
+	private int[] convertCardinalDirection(CardinalDirection cd) {
+		int[] ret = new int[2];
+		switch(cd) {
+			case North:
+				ret[0] = 0;
+				ret[1] = -1;
+				break;
+			case East:
+				ret[0] = 1;
+				ret[1] = 0;
+				break;
+			case South:
+				ret[0] = 0;
+				ret[1] = 1;
+				break;
+			case West:
+				ret[0] = -1;
+				ret[1] = 0;
+				break;
+		}
+		return(ret);
 	}
 }

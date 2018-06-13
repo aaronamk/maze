@@ -9,6 +9,8 @@ import generation.Distance;
  *
  */
 public class WallFollower implements RobotDriver{
+	BasicRobot Robot = new BasicRobot();
+	int[] dimensions = new int[2];
 	
 	@Override
 	public void setRobot(Robot r) {
@@ -30,7 +32,11 @@ public class WallFollower implements RobotDriver{
 
 	@Override
 	public boolean drive2Exit() throws Exception {
-		// TODO Auto-generated method stub
+		while(!Robot.isAtExit()) {
+			if(Robot.getBatteryLevel() == 0) {
+				return false;
+			}
+		}
 		return false;
 	}
 
@@ -45,5 +51,4 @@ public class WallFollower implements RobotDriver{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
