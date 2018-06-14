@@ -9,7 +9,7 @@ import generation.Distance;
  *
  */
 public class WallFollower implements RobotDriver{
-	BasicRobot Robot = new BasicRobot();
+	Robot Robot = new BasicRobot();
 	int[] dimensions = new int[2];
 	
 	@Override
@@ -36,6 +36,7 @@ public class WallFollower implements RobotDriver{
 			if(Robot.getBatteryLevel() == 0) {
 				return false;
 			}
+			
 		}
 		return false;
 	}

@@ -1,13 +1,14 @@
 package gui;
 
 import generation.CardinalDirection;
+import gui.Constants.UserInput;
 
 public class BasicRobot implements Robot {
 	
-	final int MAX_ENERGY = 2500;
-	final int FULL_ROTATION_ENERGY_COST = 12;
-	final int STEP_ENERGY_COST = 5;
-	final int SENSOR_ENERGY_COST = 1;
+	private final int MAX_ENERGY = 2500;
+	private final int FULL_ROTATION_ENERGY_COST = 12;
+	private final int STEP_ENERGY_COST = 5;
+	private final int SENSOR_ENERGY_COST = 1;
 	
 	private Controller Maze;
 	private boolean IsStopped;
@@ -16,14 +17,39 @@ public class BasicRobot implements Robot {
 	
 	@Override
 	public void rotate(Turn turn) {
-		// TODO Auto-generated method stub
-		
+		if(Energy>=FULL_ROTATION_ENERGY_COST/4) {
+			switch(turn) {
+				case LEFT:
+					Maze.keyDown(UserInput.Left, 0);
+					Energy -= FULL_ROTATION_ENERGY_COST/4;
+					break;
+				case RIGHT:
+					Maze.keyDown(UserInput.Right, 0);
+					Energy -= FULL_ROTATION_ENERGY_COST/4;
+					break;
+				case AROUND:
+					if(Energy >= FULL_ROTATION_ENERGY_COST/2) {
+						Maze.keyDown(UserInput.Right, 0);
+						Energy -= FULL_ROTATION_ENERGY_COST/2;
+					}
+					else
+						IsStopped = true;
+					break;
+			}
+		}
+		else
+			IsStopped = true;
 	}
 
 	@Override
 	public void move(int distance, boolean manual) {
 		for(int i=0; i<distance; i++) {
-			
+			if(Energy >= STEP_ENERGY_COST)
+				Maze.keyDown(UserInput.Up, 0);
+			else {
+				IsStopped = true;
+				break;
+			}
 		}
 	}
 
@@ -47,8 +73,7 @@ public class BasicRobot implements Robot {
 		try {
 			this.distanceToObstacle(direction);
 			return true;
-		}
-		catch(UnsupportedOperationException e) {
+		} catch(UnsupportedOperationException e) {
 			return false;
 		}
 	}
@@ -105,8 +130,37 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public int distanceToObstacle(Direction direction) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return 0;
+		if(Energy >= SENSOR_ENERGY_COST) {
+			Energy -= SENSOR_ENERGY_COST;
+			int add[] = {0, 0};
+			switch(convertRelativeDirection(direction)) {
+			case North:
+				add[1] = 1;
+				break;
+			case East:
+				add[0] = 1;
+				break;
+			case South:
+				add[1] = -1;
+				break;
+			case West:
+				add[0] = -1;
+				break;
+			}
+			
+			int[] CurPos = {Maze.getCurrentPosition()[0], Maze.getCurrentPosition()[1]};
+			try {
+				int counter = 0;
+				while(!Maze.getMazeConfiguration().getMazecells().hasWall(CurPos[0], CurPos[1], convertRelativeDirection(direction))) {
+					counter++;
+				}
+				return counter;
+			} catch (ArrayIndexOutOfBoundsException e) {
+				throw new UnsupportedOperationException();
+			}
+		}
+		IsStopped = true;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -114,26 +168,44 @@ public class BasicRobot implements Robot {
 		return true;
 	}
 	
-	private int[] convertCardinalDirection(CardinalDirection cd) {
-		int[] ret = new int[2];
+	private CardinalDirection convertRelativeDirection(Direction cd) {
 		switch(cd) {
-			case North:
-				ret[0] = 0;
-				ret[1] = -1;
-				break;
-			case East:
-				ret[0] = 1;
-				ret[1] = 0;
-				break;
-			case South:
-				ret[0] = 0;
-				ret[1] = 1;
-				break;
-			case West:
-				ret[0] = -1;
-				ret[1] = 0;
-				break;
+			case FORWARD:
+				return Maze.getCurrentDirection();
+			case BACKWARD:
+				switch(Maze.getCurrentDirection()) {
+					case North:
+						return CardinalDirection.South;
+					case East:
+						return CardinalDirection.West;
+					case South:
+						return CardinalDirection.North;
+					case West:
+						return CardinalDirection.East;
+				}
+			case RIGHT:
+				switch(Maze.getCurrentDirection()) {
+					case North:
+						return CardinalDirection.West;
+					case East:
+						return CardinalDirection.South;
+					case South:
+						return CardinalDirection.East;
+					case West:
+						return CardinalDirection.North;
+			}
+			case LEFT:
+				switch(Maze.getCurrentDirection()) {
+					case North:
+						return CardinalDirection.East;
+					case East:
+						return CardinalDirection.North;
+					case South:
+						return CardinalDirection.West;
+					case West:
+						return CardinalDirection.South;
+			}
 		}
-		return(ret);
+		return null;
 	}
 }
