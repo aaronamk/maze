@@ -60,7 +60,7 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public void setMaze(Controller controller) {
-		Maze = controller;
+		Maze = controller; 
 	}
 
 	@Override
