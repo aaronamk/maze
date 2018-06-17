@@ -3,6 +3,7 @@
  */
 package gui;
 
+import generation.Distance;
 import generation.Order;
 
 import java.awt.event.KeyListener;
@@ -39,6 +40,10 @@ public class MazeApplication extends JFrame {
 	 */
 	public MazeApplication(String parameter) {
 		init(parameter);
+	}
+	
+	public MazeApplication(String param1, String param2) {
+		init(param1, param2);
 	}
 
 	/**
@@ -99,16 +104,53 @@ public class MazeApplication extends JFrame {
 		add(controller.getPanel()) ;
 		// instantiate a key listener that feeds keyboard input into the controller
 		// and add it to the JFrame
-		KeyListener kl = new SimpleKeyListener(this, controller) ;
-		addKeyListener(kl) ;
+		KeyListener kl = new SimpleKeyListener(this, controller);
+		addKeyListener(kl);
 		// set the frame to a fixed size for its width and height and put it on dispaly
-		setSize(400, 400) ;
-		setVisible(true) ;
+		setSize(400, 400);
+		setVisible(true);
 		// focus should be on the JFrame of the MazeApplication and not on the maze panel
 		// such that the SimpleKeyListener kl is used
-		setFocusable(true) ;
+		setFocusable(true);
 		// start the game, hand over control to the game controller
 		controller.start();
+	}
+	/**
+	 * 
+	 * @param param1 can identify a generation method (Prim, Kruskal, Eller)
+	 * @param param2
+	 */
+	private void init(String param1, String param2) {
+	    // instantiate a game controller and add it to the JFrame
+	    Controller controller = createController(param1);
+		add(controller.getPanel());
+		// instantiate a key listener that feeds keyboard input into the controller
+		// and add it to the JFrame
+		KeyListener kl = new SimpleKeyListener(this, controller);
+		addKeyListener(kl);
+		// set the frame to a fixed size for its width and height and put it on dispaly
+		setSize(400, 400);
+		setVisible(true);
+		// focus should be on the JFrame of the MazeApplication and not on the maze panel
+		// such that the SimpleKeyListener kl is used
+		setFocusable(true);
+		// start the game, hand over control to the game controller
+		controller.start();
+		
+		RobotDriver Driver;
+		switch(param2) {
+		case "Wallfollower":
+			Driver = new WallFollower();
+			break;
+		default:
+			Driver = new Wizard();
+			Driver.setDistance(new Distance(controller.getMazeConfiguration().getMazedists().getDists()));
+			break;
+		}
+		Robot robot = new BasicRobot();
+		robot.setMaze(controller);
+		Driver.setRobot(robot);
+		controller.setRobotAndDriver(robot, Driver);
 	}
 	
 	/**
@@ -125,15 +167,16 @@ public class MazeApplication extends JFrame {
 	 * the name of a file that stores a maze in XML format
 	 */
 	public static void main(String[] args) {
-	    JFrame app ; 
+	    JFrame app;
 		switch (args.length) {
-		case 1 : app = new MazeApplication(args[0]);
-		break ;
-		case 0 : 
-		default : app = new MazeApplication() ;
-		break ;
+			case 4: app = new MazeApplication(args[1], args[3]);
+				break;
+			case 1: app = new MazeApplication(args[0]);
+				break;
+			case 0: default: app = new MazeApplication();
+				break;
 		}
-		app.repaint() ;
+		app.repaint();
 	}
 
 }

@@ -117,6 +117,13 @@ public class StatePlaying extends DefaultState {
         	// else: dry-run without graphics
         	printWarning();
         }
+        if(control.getRobot() != null) {
+        	try {
+				control.getDriver().drive2Exit();
+			} catch (Exception e) {
+				//call the lose screen
+			}
+        }
     }
     /**
      * Internal method to set the current position, the direction

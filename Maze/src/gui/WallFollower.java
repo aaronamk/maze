@@ -27,10 +27,7 @@ public class WallFollower implements RobotDriver{
 	}
 
 	@Override
-	public void setDistance(Distance distance) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setDistance(Distance distance) { }
 
 	@Override
 	public boolean drive2Exit() throws Exception {
@@ -41,7 +38,9 @@ public class WallFollower implements RobotDriver{
 				Robot.move(Robot.distanceToObstacle(Direction.FORWARD), false);
 		}
 		while(!Robot.isAtExit()) {
+			System.out.println("not at exit");
 			if(Robot.getBatteryLevel() == 0) {
+				System.out.println("no battery");
 				return false;
 			}
 			if(Robot.distanceToObstacle(Direction.LEFT)!=0) {

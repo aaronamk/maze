@@ -43,6 +43,7 @@ public class BasicRobot implements Robot {
 
 	@Override
 	public void move(int distance, boolean manual) {
+		System.out.println("jjj");
 		for(int i=0; i<distance; i++) {
 			int[] temp = Maze.getCurrentPosition();
 			if(Energy >= STEP_ENERGY_COST)
