@@ -44,12 +44,16 @@ public class BasicRobot implements Robot {
 	@Override
 	public void move(int distance, boolean manual) {
 		for(int i=0; i<distance; i++) {
+			int[] temp = Maze.getCurrentPosition();
 			if(Energy >= STEP_ENERGY_COST)
 				Maze.keyDown(UserInput.Up, 0);
 			else {
 				IsStopped = true;
 				break;
 			}
+			if(temp[0] != Maze.getCurrentPosition()[0] || temp[1] != Maze.getCurrentPosition()[1])
+				Energy -= STEP_ENERGY_COST;
+			else break;
 		}
 	}
 
