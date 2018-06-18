@@ -49,8 +49,10 @@ public class BasicRobot implements Robot {
 		System.out.println("forward");
 		for(int i=0; i<distance; i++) {
 			int[] temp = Maze.getCurrentPosition();
-			if(Energy >= STEP_ENERGY_COST)
+			if(Energy >= STEP_ENERGY_COST) {
 				Maze.keyDown(UserInput.Up, 0);
+				this.Odometer++;
+			}
 			else {
 				IsStopped = true;
 				System.out.println("stpped");
@@ -58,7 +60,10 @@ public class BasicRobot implements Robot {
 			}
 			if(temp[0] != Maze.getCurrentPosition()[0] || temp[1] != Maze.getCurrentPosition()[1])
 				Energy -= STEP_ENERGY_COST;
-			else break;
+			else {
+				this.Odometer--;
+				break;
+			}
 		}
 	}
 

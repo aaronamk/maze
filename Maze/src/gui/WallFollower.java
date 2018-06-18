@@ -56,6 +56,7 @@ public class WallFollower implements RobotDriver{
 				Robot.move(1, false);
 			return true;
 		}
+		System.out.println("proble");
 		throw new Exception();
 	}
 
