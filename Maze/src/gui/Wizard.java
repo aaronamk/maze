@@ -9,11 +9,14 @@ import generation.Distance;
  *
  */
 public class Wizard implements RobotDriver{
-
+	Robot Robot;
+	private int MaxEnergy;
+	Distance dist;
+	
 	@Override
 	public void setRobot(Robot r) {
-		// TODO Auto-generated method stub
-		
+		this.Robot = r;
+		MaxEnergy = (int)Robot.getBatteryLevel();
 	}
 
 	@Override
@@ -24,26 +27,24 @@ public class Wizard implements RobotDriver{
 
 	@Override
 	public void setDistance(Distance distance) {
-		// TODO Auto-generated method stub
+		dist = distance;
 		
 	}
 
 	@Override
 	public boolean drive2Exit() throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		
+		throw new Exception();
 	}
 
 	@Override
 	public float getEnergyConsumption() {
-		// TODO Auto-generated method stub
-		return 0;
+		return MaxEnergy-Robot.getBatteryLevel();
 	}
 
 	@Override
 	public int getPathLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Robot.getOdometerReading();
 	}
 
 }

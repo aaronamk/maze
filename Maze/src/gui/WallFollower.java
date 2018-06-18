@@ -46,10 +46,11 @@ public class WallFollower implements RobotDriver{
 			if(Robot.distanceToObstacle(Direction.LEFT)!=0) {
 				Robot.rotate(Turn.LEFT);
 				Robot.move(1, false);
+				System.out.println("left");
 			}
 			else if(Robot.distanceToObstacle(Direction.FORWARD)==0) {
 				Robot.rotate(Turn.RIGHT);
-				Robot.move(1, false);
+				System.out.println("right");
 			}
 			else
 				Robot.move(1, false);

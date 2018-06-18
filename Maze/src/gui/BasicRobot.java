@@ -30,6 +30,7 @@ public class BasicRobot implements Robot {
 				case AROUND:
 					if(Energy >= FULL_ROTATION_ENERGY_COST/2) {
 						Maze.keyDown(UserInput.Right, 0);
+						Maze.keyDown(UserInput.Right, 0);
 						Energy -= FULL_ROTATION_ENERGY_COST/2;
 					}
 					else
@@ -37,19 +38,22 @@ public class BasicRobot implements Robot {
 					break;
 			}
 		}
-		else
+		else {
+			System.out.println("stopped");
 			IsStopped = true;
+		}
 	}
 
 	@Override
 	public void move(int distance, boolean manual) {
-		System.out.println("jjj");
+		System.out.println("forward");
 		for(int i=0; i<distance; i++) {
 			int[] temp = Maze.getCurrentPosition();
 			if(Energy >= STEP_ENERGY_COST)
 				Maze.keyDown(UserInput.Up, 0);
 			else {
 				IsStopped = true;
+				System.out.println("stpped");
 				break;
 			}
 			if(temp[0] != Maze.getCurrentPosition()[0] || temp[1] != Maze.getCurrentPosition()[1])
@@ -140,13 +144,13 @@ public class BasicRobot implements Robot {
 			int add[] = {0, 0};
 			switch(convertRelativeDirection(direction)) {
 			case North:
-				add[1] = 1;
+				add[1] = -1;
 				break;
 			case East:
 				add[0] = 1;
 				break;
 			case South:
-				add[1] = -1;
+				add[1] = 1;
 				break;
 			case West:
 				add[0] = -1;
@@ -155,9 +159,15 @@ public class BasicRobot implements Robot {
 			
 			int[] CurPos = {Maze.getCurrentPosition()[0], Maze.getCurrentPosition()[1]};
 			try {
-				int counter = 0;
+				if(Maze.getMazeConfiguration().getMazecells().hasWall(CurPos[0], CurPos[1], convertRelativeDirection(direction))){
+					return 0;
+				}
+				int counter = 1;
 				while(!Maze.getMazeConfiguration().getMazecells().hasWall(CurPos[0], CurPos[1], convertRelativeDirection(direction))) {
 					counter++;
+					CurPos[0] += add[0];
+					CurPos[1] += add[1];
+					System.out.println("thing");
 				}
 				return counter;
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -193,22 +203,22 @@ public class BasicRobot implements Robot {
 					case North:
 						return CardinalDirection.West;
 					case East:
-						return CardinalDirection.South;
+						return CardinalDirection.North;
 					case South:
 						return CardinalDirection.East;
 					case West:
-						return CardinalDirection.North;
+						return CardinalDirection.South;
 			}
 			case LEFT:
 				switch(Maze.getCurrentDirection()) {
 					case North:
 						return CardinalDirection.East;
 					case East:
-						return CardinalDirection.North;
+						return CardinalDirection.South;
 					case South:
 						return CardinalDirection.West;
 					case West:
-						return CardinalDirection.South;
+						return CardinalDirection.North;
 			}
 		}
 		return null;
